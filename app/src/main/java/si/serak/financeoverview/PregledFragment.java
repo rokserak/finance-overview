@@ -39,7 +39,8 @@ public class PregledFragment extends Fragment {
             int id = str.getSid();
             String vrsta = str.getVrstaStroska();
             float cena = str.getCena();
-            info = info + "\n\n" + " id: " + id + "\n vrsta: " + vrsta + "\n Cena: " + cena;
+            String datum = str.getDatum();
+            info = info + "\n\n" + " id: " + id + "\n vrsta: " + vrsta + "\n Cena: " + cena + "\n datum: " + datum;
         }
 
         txtInfo.setText(info);

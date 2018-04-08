@@ -1,12 +1,22 @@
 package si.serak.financeoverview;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -14,6 +24,8 @@ import android.widget.Button;
  */
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private Button bnAddStrosek, bnViewStrosek;
+    private ListView dons;
+    private TextView limit, seOstalLimit;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -31,6 +43,45 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bnViewStrosek = view.findViewById(R.id.bn_view_strosek);
         bnViewStrosek.setOnClickListener(this);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+
+
+        limit = view.findViewById(R.id.limit);
+        limit.setText("Dnevni limit: " + prefs.getString("limit", "nastavi"));
+
+
+        dons = view.findViewById(R.id.dons);
+
+
+        float vseSkupi = 0;
+
+        Date d = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
+        List<Strosek> stroski = MainActivity.appDatabase.stroskiDao().getDanasnje(df.format(d));
+        String[] ds = new String[stroski.size()];
+
+        for (int i = 0; i < stroski.size(); i++) {
+            int id = stroski.get(i).getSid();
+            String vrsta = stroski.get(i).getVrstaStroska();
+            float cena = stroski.get(i).getCena();
+
+            vseSkupi += cena; //za kuk se ustane
+
+            String datum = stroski.get(i).getDatum();
+            ds[i] = " id: " + id + "\n vrsta: " + vrsta + "\n Cena: " + cena + "\n datum: " + datum;
+        }
+
+
+        ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1, ds);
+        dons.setAdapter(adapter);
+
+        seOstalLimit = view.findViewById(R.id.seOstalLimit);
+
+        vseSkupi = Float.parseFloat(prefs.getString("limit", "0")) - vseSkupi;
+
+        seOstalLimit.setText("Do limita je še: " + vseSkupi);
+
         return view;
     }
 
@@ -38,12 +89,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bn_add_strosek:
-                VnosActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, new AddStrosekFragment())
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, new AddStrosekFragment())
                         .addToBackStack(null).commit();
                 break;
 
             case R.id.bn_view_strosek:
-                VnosActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, new PregledFragment())
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, new PregledFragment())
                         .addToBackStack(null).commit();
                 break;
         }

@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +47,12 @@ public class AddStrosekFragment extends Fragment {
                 Strosek strosek = new Strosek();
                 strosek.setVrstaStroska(v);
                 strosek.setCena(c);
+
+                Date d = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
+
+                strosek.setDatum(df.format(d));
 
 
                 MainActivity.appDatabase.stroskiDao().insertAll(strosek);

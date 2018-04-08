@@ -20,12 +20,26 @@ public class Strosek {
     @ColumnInfo(name = "cena")
     private Float cena;
 
+    @ColumnInfo(name = "datum")
+    private String datum;
+
+
+
 
     public Strosek() {
         this.sid = sid;
         this.vrstaStroska = vrstaStroska;
+        this.datum = datum;
 
         this.cena = cena;
+    }
+
+    public String getDatum() {
+        return datum;
+    }
+
+    public void setDatum(String datum) {
+        this.datum = datum;
     }
 
     public Integer getSid() {

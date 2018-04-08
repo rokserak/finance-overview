@@ -17,6 +17,9 @@ public interface StroskiDao {
     @Query("SELECT * FROM stroski")
     List<Strosek> getAll();
 
+    @Query("SELECT * FROM stroski WHERE datum = (:danasnjiDatum)")
+    List<Strosek> getDanasnje(String danasnjiDatum);
+
     @Update
     void update(Strosek strosek);
 

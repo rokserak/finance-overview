@@ -12,6 +12,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     public static AppDatabase appDatabase;
+    public static android.support.v4.app.FragmentManager fragmentManager;
 
 
     @Override
@@ -24,6 +25,18 @@ public class MainActivity extends AppCompatActivity {
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "baza").allowMainThreadQueries().build();
+
+
+        fragmentManager = getSupportFragmentManager();
+
+
+        if (findViewById(R.id.fragmet_container) != null) {
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            fragmentManager.beginTransaction().add(R.id.fragmet_container, new HomeFragment()).commit();
+        }
 
 
     }
@@ -50,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent s = new Intent(this, SettingsActivity.class);
+            startActivity(s);
             return true;
         }
 
