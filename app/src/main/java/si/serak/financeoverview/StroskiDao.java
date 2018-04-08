@@ -20,6 +20,9 @@ public interface StroskiDao {
     @Query("SELECT * FROM stroski WHERE datum = (:danasnjiDatum)")
     List<Strosek> getDanasnje(String danasnjiDatum);
 
+    @Query("SELECT datum FROM stroski GROUP BY datum")
+    List<Strosek> getVseDatume();
+
     @Update
     void update(Strosek strosek);
 
