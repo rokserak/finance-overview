@@ -39,8 +39,6 @@ public class PregledFragment extends Fragment implements View.OnClickListener {
 
         List<Strosek> stroski = MainActivity.appDatabase.stroskiDao().getAll();
 
-        String info = "";
-
         String[] vs = new String[stroski.size()];
 
         for (int i = 0; i < stroski.size(); i++) {
@@ -71,6 +69,7 @@ public class PregledFragment extends Fragment implements View.OnClickListener {
         pojdiNaDatum = view.findViewById(R.id.pojdiNaDatum);
         pojdiNaDatum.setOnClickListener(this);
 
+
         return view;
     }
 
@@ -78,7 +77,14 @@ public class PregledFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.pojdiNaDatum:
-                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, new DolocenDatumFragment())
+
+                Bundle arguments = new Bundle();
+                arguments.putString("datum", izberiDatum.getSelectedItem().toString());
+
+                Fragment fragment = new DolocenDatumFragment();
+                fragment.setArguments(arguments);
+
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, fragment)
                         .addToBackStack(null).commit();
                 break;
 
