@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "baza").allowMainThreadQueries().build();
 
@@ -70,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+
+
     }
 
 

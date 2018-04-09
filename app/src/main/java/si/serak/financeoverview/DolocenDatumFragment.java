@@ -12,6 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +29,7 @@ public class DolocenDatumFragment extends Fragment {
 
     private TextView zaDatum, prihranekZaDan;
     private ListView listZaDan;
+    private PieChart graf;
 
 
     public DolocenDatumFragment() {
@@ -54,6 +62,9 @@ public class DolocenDatumFragment extends Fragment {
 
         float skupiCena = 0;
 
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+
         for (int i = 0; i < stroski.size(); i++) {
             int id = stroski.get(i).getSid();
             String vrsta = stroski.get(i).getVrstaStroska();
@@ -63,6 +74,9 @@ public class DolocenDatumFragment extends Fragment {
 
             String datum = stroski.get(i).getDatum();
             vs[i] = " id: " + id + "\n vrsta: " + vrsta + "\n Cena: " + cena + "\n datum: " + datum;
+
+            pieEntries.add(new PieEntry(cena, vrsta));
+
         }
 
         ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1, vs);
@@ -76,9 +90,20 @@ public class DolocenDatumFragment extends Fragment {
         prihranekZaDan.setText("Prihranek: " + skupiCena);
 
 
+        PieDataSet dataSet = new PieDataSet(pieEntries, "pregled");
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        PieData data = new PieData(dataSet);
+
+        graf = view.findViewById(R.id.graf);
+        graf.setData(data);
+        graf.animate();
+        graf.invalidate();
+
+
 
 
         return view;
     }
+
 
 }

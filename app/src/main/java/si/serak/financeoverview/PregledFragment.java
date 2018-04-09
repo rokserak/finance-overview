@@ -35,6 +35,8 @@ public class PregledFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pregled, container, false);
+
+
         vse = view.findViewById(R.id.vse);
 
         List<Strosek> stroski = MainActivity.appDatabase.stroskiDao().getAll();
@@ -84,9 +86,11 @@ public class PregledFragment extends Fragment implements View.OnClickListener {
                 Fragment fragment = new DolocenDatumFragment();
                 fragment.setArguments(arguments);
 
+
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, fragment)
                         .addToBackStack(null).commit();
                 break;
+
 
         }
 
