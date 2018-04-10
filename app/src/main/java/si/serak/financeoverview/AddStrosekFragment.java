@@ -18,10 +18,10 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddStrosekFragment extends Fragment {
+public class AddStrosekFragment extends Fragment implements View.OnClickListener {
 
     private EditText vrsta, cena;
-    private Button bnSave;
+    private Button bnSave, drugDatum;
 
 
     public AddStrosekFragment() {
@@ -63,8 +63,21 @@ public class AddStrosekFragment extends Fragment {
             }
         });
 
+        drugDatum = view.findViewById(R.id.drugDatum);
+        drugDatum.setOnClickListener(this);
+
 
         return view;
     }
 
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.drugDatum:
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, new AddStrosekZaDolocenDan())
+                        .addToBackStack(null).commit();
+                break;
+        }
+    }
 }

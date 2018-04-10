@@ -91,7 +91,7 @@ public class DolocenDatumFragment extends Fragment {
 
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "pregled");
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         PieData data = new PieData(dataSet);
 
         graf = view.findViewById(R.id.graf);
