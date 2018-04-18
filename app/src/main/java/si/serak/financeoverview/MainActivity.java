@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "baza").allowMainThreadQueries().build();
+                AppDatabase.class, "baza").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
 
         fragmentManager = getSupportFragmentManager();
@@ -41,11 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void goVnos(View view) {
-        Intent intent = new Intent(this, VnosActivity.class);
-        startActivity(intent);
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

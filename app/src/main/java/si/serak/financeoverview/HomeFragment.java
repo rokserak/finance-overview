@@ -46,8 +46,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
 
 
-        limit = view.findViewById(R.id.limit);
-        limit.setText("Dnevni limit: " + prefs.getString("limit", "nastavi"));
+
 
 
         dons = view.findViewById(R.id.dons);
@@ -76,9 +75,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1, ds);
         dons.setAdapter(adapter);
 
+        List<Prihodek> prihodki = MainActivity.appDatabase.prihodekDao().getDanasnje(df.format(d));
+        float skupajPlus = 0;
+
+        for (int j = 0; j < prihodki.size(); j++) {
+            skupajPlus += prihodki.get(j).getCena();
+        }
+
+        limit = view.findViewById(R.id.limit);
+
+        float zelenLimit = Float.parseFloat(prefs.getString("limit", "0"));
+        zelenLimit += skupajPlus;
+
+        limit.setText("Dnevni limit: " + zelenLimit);
+
         seOstalLimit = view.findViewById(R.id.seOstalLimit);
 
-        vseSkupi = Float.parseFloat(prefs.getString("limit", "0")) - vseSkupi;
+        vseSkupi = Float.parseFloat(prefs.getString("limit", "0")) - vseSkupi + skupajPlus;
 
         seOstalLimit.setText("Do limita je še: " + vseSkupi);
 

@@ -83,9 +83,16 @@ public class DolocenDatumFragment extends Fragment {
         listZaDan.setAdapter(adapter);
 
 
+        List<Prihodek> prihodki = MainActivity.appDatabase.prihodekDao().getDanasnje(izbranDatum);
+        float skupajPlus = 0;
+
+        for (int j = 0; j < prihodki.size(); j++) {
+            skupajPlus += prihodki.get(j).getCena();
+        }
+
         prihranekZaDan = view.findViewById(R.id.prihranekZaDan);
 
-        skupiCena = Float.parseFloat(prefs.getString("limit", "0")) - skupiCena;
+        skupiCena = Float.parseFloat(prefs.getString("limit", "0")) - skupiCena + skupajPlus;
 
         prihranekZaDan.setText("Prihranek: " + skupiCena);
 

@@ -21,7 +21,7 @@ import java.util.Date;
 public class AddStrosekFragment extends Fragment implements View.OnClickListener {
 
     private EditText vrsta, cena;
-    private Button bnSave, drugDatum;
+    private Button bnSave, drugDatum, vnesiPrihodek;
 
 
     public AddStrosekFragment() {
@@ -66,6 +66,8 @@ public class AddStrosekFragment extends Fragment implements View.OnClickListener
         drugDatum = view.findViewById(R.id.drugDatum);
         drugDatum.setOnClickListener(this);
 
+        vnesiPrihodek = view.findViewById(R.id.prihodek);
+        vnesiPrihodek.setOnClickListener(this);
 
         return view;
     }
@@ -76,6 +78,10 @@ public class AddStrosekFragment extends Fragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.drugDatum:
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, new AddStrosekZaDolocenDan())
+                        .addToBackStack(null).commit();
+                break;
+            case R.id.prihodek:
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmet_container, new AddPrihodek())
                         .addToBackStack(null).commit();
                 break;
         }
